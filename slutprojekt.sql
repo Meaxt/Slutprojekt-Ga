@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Värd: 127.0.0.1
--- Skapad: 17 nov 2014 kl 10:56
+-- Skapad: 01 dec 2014 kl 11:00
 -- Serverversion: 5.6.14
 -- PHP-version: 5.5.6
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `inlogg` (
   `username` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumpning av Data i tabell `inlogg`
