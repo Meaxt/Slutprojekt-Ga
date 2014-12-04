@@ -7,11 +7,11 @@ define("DB_NAME", "slutprojekt");
 $result = null;
 
 $dbh = new PDO('mysql:dbname=' . DB_NAME . ';host=' . DB_SERVER . ';charset=utf8', DB_USER, DB_PASSWORD);
-
+include 'login.html.php';
 if(isset($_POST["action"])){
     
     if($_POST["action"] == "login"){
-       
+//        var_dump($_POST);
         $user = $_POST["username"];
         $password = $_POST["password"];
      
@@ -38,20 +38,21 @@ if(isset($_POST["action"])){
         
     }
   
-    include 'index.html.php';
-    if(isset($_POST["action"])){
+    
+    
+        
+}
+include 'reg.html.php';
+if(isset($_POST["action"])){
         
         if($_POST["action"] == "reg"){
             
             $regusername = $_POST["reguser"];
             $regpassword = $_POST["regpass"];
-            echo $regpassword;
-            echo $regusername;
-        $sql = "INSERT INTO 'inlogg'('username', 'password') VALUES (:username, :password)";            
-            
-            
-            
-            
+//            echo $regpassword;
+//            echo $regusername;
+        $sql = "INSERT INTO inlogg(username, password) VALUES (:username, :password)";
+//        echo $sql;
         $stmt = $dbh->prepare($sql);
         $stmt->bindParam(":password", $regpassword);
         $stmt->bindParam(":username", $regusername);
@@ -61,8 +62,76 @@ if(isset($_POST["action"])){
         }
             
     }
-        
+if (isset($_POST["action"])) {
+    if ($_POST["action"] == "delete") {
+        //ta bort en katt
+        $sql = "DELETE FROM produkter WHERE id='" . $_POST["id"] . "'";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        header("Location:?");
+    }
 }
+if (isset($_POST["action"])) {
+    if ($_POST["action"] == "Accept") {
+        $namn = filter_input(INPUT_POST, 'namn', FILTER_SANITIZE_SPECIAL_CHARS);
+        //uppdatera en katt
+        $sql = "UPDATE produkter SET namn='" . $namn . "' WHERE id='" . $_POST["id"] . "'";
+        $sql = "UPDATE produkter SET pris='" . $pris . "' WHERE id='" . $_POST["id"] . "'";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        header("Location:?");
+    }
+}
+if (isset($_POST["action"])) {
+    if ($_POST["action"] == "New") {
+        $namn = filter_input(INPUT_POST, 'namn', FILTER_SANITIZE_SPECIAL_CHARS);
+        //skapa ny
+        $sql = "INSERT INTO produkter(namn, pris) VALUES ('$namn', '$pris')";
+        echo $sql;
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        header("Location:?");
+    }
+}
+//hämta produkter
+$sql = "SELECT * FROM produkter";
+$stmt = $dbh->prepare($sql);
+$stmt->execute();
+$produkter = $stmt->fetchAll();
+
+
+echo "<br>";
+foreach ($produkter as $produkt) {
+    echo "<form method='post'>";
+    echo "<tr>";
+    echo "<td>" . $produkt[1] . " " . $produkt[2] . "</td>";
+    echo "<td><input type='submit' name='action' value='edit'><input type='submit' name='action' value='delete'> </td>";
+    echo "<input type='hidden' value='" . $produkt[1] . "' name='namn'>";
+    echo "<input type='hidden' value='" . $produkt[2] . "' name='pris'>";
+    echo "</tr>";
+    echo "</form>";
+}
+
+
+
+if (isset($_POST["action"])) {
+    if ($_POST["action"] == "edit") {
+       
+echo "<form method='post'>";
+echo "<input type='text' name='namn' value='" . $_POST["namn"] . "'>";
+echo "<input type='text' name='pris' value='" . $_POST["pris"] . "'>";
+echo "<input type='submit' name='action' value='Accept'>";
+echo "<input type='hidden' value='" . $_POST["id"] . "' name='id'>";
+echo "<br>";
+echo "</form>";
+    }
+}
+
+echo "<form method='post'>";
+echo "<input type='text' name='namn'>";
+echo "<input type='text' name='pris'>";
+echo "<input type='submit' name='action' value='New'>";
+echo "</form>";
 
 
 
@@ -81,14 +150,7 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <form method="post">
-            <br>
-            Registrera dig
-            <br>
-            
-            Username:<input type="text" name="reguser"><br>
-            Password:<input type="password" name="regpass"><br>
-            <input type="submit" value="reg" name="action">
-        </form>
+       Kundvagn
+       <br>
     </body>
 </html>
