@@ -1,5 +1,6 @@
 <?php
-
+    var_dump($_POST);
+    
 define("DB_SERVER", "localhost");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");
@@ -62,9 +63,12 @@ if(isset($_POST["action"])){
         }
             
     }
+
 if (isset($_POST["action"])) {
+    var_dump($_POST);
     if ($_POST["action"] == "delete") {
-        //ta bort en katt
+        //ta bort en produkt
+        echo "ja";
         $sql = "DELETE FROM produkter WHERE id='" . $_POST["id"] . "'";
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
@@ -74,7 +78,8 @@ if (isset($_POST["action"])) {
 if (isset($_POST["action"])) {
     if ($_POST["action"] == "Accept") {
         $namn = filter_input(INPUT_POST, 'namn', FILTER_SANITIZE_SPECIAL_CHARS);
-        //uppdatera en katt
+        $pris = filter_input(INPUT_POST, 'pris', FILTER_SANITIZE_SPECIAL_CHARS);
+        //uppdatera en produkt
         $sql = "UPDATE produkter SET namn='" . $namn . "' WHERE id='" . $_POST["id"] . "'";
         $sql = "UPDATE produkter SET pris='" . $pris . "' WHERE id='" . $_POST["id"] . "'";
         $stmt = $dbh->prepare($sql);
@@ -85,14 +90,22 @@ if (isset($_POST["action"])) {
 if (isset($_POST["action"])) {
     if ($_POST["action"] == "New") {
         $namn = filter_input(INPUT_POST, 'namn', FILTER_SANITIZE_SPECIAL_CHARS);
+        $pris = filter_input(INPUT_POST, 'pris', FILTER_SANITIZE_SPECIAL_CHARS);
         //skapa ny
         $sql = "INSERT INTO produkter(namn, pris) VALUES ('$namn', '$pris')";
-        echo $sql;
+        
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
         header("Location:?");
     }
 }
+
+if(isset($_POST["action"])){
+    if ($_POST["action"] == "add") {
+        
+    }
+}
+
 //hämta produkter
 $sql = "SELECT * FROM produkter";
 $stmt = $dbh->prepare($sql);
@@ -102,14 +115,17 @@ $produkter = $stmt->fetchAll();
 
 echo "<br>";
 foreach ($produkter as $produkt) {
-    echo "<form method='post'>";
+    
     echo "<tr>";
+    echo "<form method='post'>";
     echo "<td>" . $produkt[1] . " " . $produkt[2] . "</td>";
-    echo "<td><input type='submit' name='action' value='edit'><input type='submit' name='action' value='delete'> </td>";
+    echo "<td><input type='submit' name='action' value='edit'><input type='submit' name='action' value='delete'><input type='submit' name='action' value='add'></td>";
     echo "<input type='hidden' value='" . $produkt[1] . "' name='namn'>";
     echo "<input type='hidden' value='" . $produkt[2] . "' name='pris'>";
-    echo "</tr>";
+    echo "<input type='hidden' value='" . $produkt[0] . "' name='id'>";
     echo "</form>";
+    echo "</tr>";
+    
 }
 
 
@@ -118,7 +134,6 @@ if (isset($_POST["action"])) {
     if ($_POST["action"] == "edit") {
        
 echo "<form method='post'>";
-echo "<input type='text' name='namn' value='" . $_POST["namn"] . "'>";
 echo "<input type='text' name='pris' value='" . $_POST["pris"] . "'>";
 echo "<input type='submit' name='action' value='Accept'>";
 echo "<input type='hidden' value='" . $_POST["id"] . "' name='id'>";
@@ -150,7 +165,7 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-       Kundvagn
+       
        <br>
     </body>
 </html>
