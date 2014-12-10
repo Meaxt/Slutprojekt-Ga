@@ -1,6 +1,6 @@
 <?php
-    var_dump($_POST);
     
+session_start();    
 define("DB_SERVER", "localhost");
 define("DB_USER", "root");
 define("DB_PASSWORD", "");
@@ -65,7 +65,6 @@ if(isset($_POST["action"])){
     }
 
 if (isset($_POST["action"])) {
-    var_dump($_POST);
     if ($_POST["action"] == "delete") {
         //ta bort en produkt
         echo "ja";
@@ -102,6 +101,9 @@ if (isset($_POST["action"])) {
 
 if(isset($_POST["action"])){
     if ($_POST["action"] == "add") {
+        $_SESSION["cart"]=array();
+        $_SESSION["cart"][]=array("anton",32);
+        var_dump($_SESSION);
         
     }
 }
