@@ -65,7 +65,7 @@ if (isset($_POST["action"])) {
 if (isset($_POST["action"])) {
     if ($_POST["action"] == "delete") {
         //ta bort en produkt
-        echo "ja";
+        echo "gör delete";
         $sql = "DELETE FROM produkter WHERE id='" . $_POST["id"] . "'";
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
@@ -74,6 +74,7 @@ if (isset($_POST["action"])) {
 }
 if (isset($_POST["action"])) {
     if ($_POST["action"] == "Accept") {
+        echo "Gör accept";
         $namn = filter_input(INPUT_POST, 'namn', FILTER_SANITIZE_SPECIAL_CHARS);
         $pris = filter_input(INPUT_POST, 'pris', FILTER_SANITIZE_SPECIAL_CHARS);
         //uppdatera en produkt
@@ -85,12 +86,18 @@ if (isset($_POST["action"])) {
     }
 }
 if (isset($_POST["action"])) {
+    
     if ($_POST["action"] == "New") {
+        echo "Gör new";
         $namn = filter_input(INPUT_POST, 'namn', FILTER_SANITIZE_SPECIAL_CHARS);
         $pris = filter_input(INPUT_POST, 'pris', FILTER_SANITIZE_SPECIAL_CHARS);
+        $brand = filter_input(INPUT_POST, 'brand', FILTER_SANITIZE_SPECIAL_CHARS);
+        $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
+        $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_SPECIAL_CHARS);
         //skapa ny
-        $sql = "INSERT INTO produkter(namn, pris) VALUES ('$namn', '$pris')";
-
+        
+        $sql = "INSERT INTO produkter(namn, pris, brand, category, color) VALUES ('$namn', '$pris','$brand','$category','$color')";
+        echo $sql;
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
         header("Location:?");
@@ -181,8 +188,11 @@ if (isset($_POST["action"])) {
 }
 
 echo "<form method='post'>";
-echo "<input type='text' name='namn'>";
-echo "<input type='text' name='pris'>";
+echo "Namn<input type='text' name='namn'>";
+echo "Pris<input type='text' name='pris'>";
+echo "Brand<input type='text' name='brand'>";
+echo "Category<input type='text' name='category'>";
+echo "Color<input type='text' name='color'>";
 echo "<input type='submit' name='action' value='New'>";
 echo "</form>";
 ?>
