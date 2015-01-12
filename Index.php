@@ -44,9 +44,13 @@ if (isset($_POST["action"])) {
         }
     }
 }
+$sql = "SELECT * FROM produkter";
+$stmt = $dbh->prepare($sql);
+$stmt->execute();
+$produkter = $stmt->fetchAll();
 include 'reg.html.php';
 if (isset($_POST["action"])) {
-
+      //Registrering
     if ($_POST["action"] == "reg") {
 
         $regusername = $_POST["reguser"];
@@ -60,9 +64,9 @@ if (isset($_POST["action"])) {
         $stmt->bindParam(":username", $regusername);
         $stmt->execute();
     }
-}
 
-if (isset($_POST["action"])) {
+
+
     if ($_POST["action"] == "delete") {
         //ta bort en produkt
         echo "gör delete";
@@ -71,9 +75,10 @@ if (isset($_POST["action"])) {
         $stmt->execute();
         header("Location:?");
     }
-}
-if (isset($_POST["action"])) {
+
+
     if ($_POST["action"] == "Accept") {
+        //Ändra produkter
         echo "Gör accept";
         $namn = filter_input(INPUT_POST, 'namn', FILTER_SANITIZE_SPECIAL_CHARS);
         $pris = filter_input(INPUT_POST, 'pris', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -84,10 +89,11 @@ if (isset($_POST["action"])) {
         $stmt->execute();
         header("Location:?");
     }
-}
-if (isset($_POST["action"])) {
+
+
     
     if ($_POST["action"] == "New") {
+        //Lägga in nya produkter
         echo "Gör new";
         $namn = filter_input(INPUT_POST, 'namn', FILTER_SANITIZE_SPECIAL_CHARS);
         $pris = filter_input(INPUT_POST, 'pris', FILTER_SANITIZE_SPECIAL_CHARS);
@@ -97,19 +103,15 @@ if (isset($_POST["action"])) {
         //skapa ny
         
         $sql = "INSERT INTO produkter(namn, pris, brand, category, color) VALUES ('$namn', '$pris','$brand','$category','$color')";
-        echo $sql;
+//        echo $sql;
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
         header("Location:?");
     }
-}
-//hämta produkter
-$sql = "SELECT * FROM produkter";
-$stmt = $dbh->prepare($sql);
-$stmt->execute();
-$produkter = $stmt->fetchAll();
 
-if (isset($_POST["action"])) {
+
+
+
     if ($_POST["action"] == "add") {
         $add_to_cart = true;
         for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
@@ -123,9 +125,20 @@ if (isset($_POST["action"])) {
             $_SESSION["cart"][] = array("id" => $_POST["id"], "pris" => $_POST["pris"], "namn" => $_POST["namn"], "antal" => 1);
         }
     }
+    if($_POST["action"] == "Billigast"){
+        $sql = "SELECT * FROM produkter ORDER BY Pris";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        $produkter = $stmt->fetchAll();
+    }
 }
+//hämta produkter
+
 
 var_dump($_SESSION);
+echo"<br>";
+echo"<br>";
+echo"<br>";
 
 
 
@@ -147,6 +160,10 @@ foreach ($produkter as $produkt) {
     echo "</form>";
     echo "</tr>";
 }
+echo "<input type='submit' name='action' value='Billigast'>";
+echo "<input type='submit' name='action' value='Dyrast'>";
+echo "<input type='submit' name='action' value='A-Ö'>";
+echo "<input type='submit' name='action' value='Ö-A'>";
 echo "<br>";
 echo "<br>";
 echo "<br>";
