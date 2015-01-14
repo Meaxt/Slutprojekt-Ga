@@ -48,7 +48,14 @@ $sql = "SELECT * FROM produkter";
 $stmt = $dbh->prepare($sql);
 $stmt->execute();
 $produkter = $stmt->fetchAll();
+
+$sql = "SELECT * FROM produkter";
+$stmt = $dbh->prepare($sql);
+$stmt->execute();
+$adminprodukter = $stmt->fetchAll();
+
 include 'reg.html.php';
+
 if (isset($_POST["action"])) {
       //Registrering
     if ($_POST["action"] == "reg") {
@@ -126,7 +133,33 @@ if (isset($_POST["action"])) {
         }
     }
     if($_POST["action"] == "Billigast"){
+        
         $sql = "SELECT * FROM produkter ORDER BY Pris";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        $produkter = $stmt->fetchAll();      
+    }
+    if($_POST["action"] == "Dyrast"){
+        
+        $sql = "SELECT * FROM produkter ORDER BY Pris DESC";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        $produkter = $stmt->fetchAll();
+    }
+    if($_POST["action"] == "A-Z"){
+        
+        $sql = "SELECT * FROM produkter ORDER BY Namn";
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        $produkter = $stmt->fetchAll();
+    }
+    if($_POST["action"] == "Z-A"){
+        $cat = ????
+        if ($cat == null) {
+            $sql = "SELECT * FROM produkter WHERE 1 ORDER BY Namn DESC";
+        } else {
+            $sql = "SELECT * FROM produkter WHERE 1 ORDER BY Namn DESC";
+        }
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
         $produkter = $stmt->fetchAll();
@@ -135,14 +168,20 @@ if (isset($_POST["action"])) {
 //hämta produkter
 
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
+echo "";
 echo"<br>";
 echo"<br>";
 echo"<br>";
 
 
 
-
+echo "<form method='post'>";
+echo "<input type='submit' name='action' value='T-shirt'>";
+echo "<input type='submit' name='action' value='Skjortor'>";
+echo "<input type='submit' name='action' value='Jeans'>";
+echo "<input type='submit' name='action' value='Jackor'>";
+echo "</form>";
 
 
 //var_dump($_SESSION);
@@ -160,10 +199,13 @@ foreach ($produkter as $produkt) {
     echo "</form>";
     echo "</tr>";
 }
+echo "Sortering";
+echo "<form method='post'>";
 echo "<input type='submit' name='action' value='Billigast'>";
 echo "<input type='submit' name='action' value='Dyrast'>";
-echo "<input type='submit' name='action' value='A-Ö'>";
-echo "<input type='submit' name='action' value='Ö-A'>";
+echo "<input type='submit' name='action' value='A-Z'>";
+echo "<input type='submit' name='action' value='Z-A'>";
+echo "</form>";
 echo "<br>";
 echo "<br>";
 echo "<br>";
@@ -177,7 +219,7 @@ echo "<br>";
 echo "<br>";
 
 echo 'Admin shit';
-foreach ($produkter as $produkt) {
+foreach ($adminprodukter as $produkt) {
 
     echo "<tr>";
     echo "<form method='post'>";

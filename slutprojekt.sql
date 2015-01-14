@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Värd: 127.0.0.1
--- Skapad: 12 jan 2015 kl 10:52
+-- Skapad: 14 jan 2015 kl 09:27
 -- Serverversion: 5.6.14
 -- PHP-version: 5.5.6
 
@@ -64,19 +64,24 @@ CREATE TABLE IF NOT EXISTS `produkter` (
   `color` varchar(30) NOT NULL,
   `category` varchar(30) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 --
 -- Dumpning av Data i tabell `produkter`
 --
 
 INSERT INTO `produkter` (`Id`, `Namn`, `Pris`, `brand`, `color`, `category`) VALUES
-(2, 'Twerk', 16, '', '', ''),
-(11, 'Antons dator', 420, '', '', ''),
-(13, 'Hej', 123, 'Jo', 'Vit', 'Yee'),
-(14, 'Hej', 123, 'Jo', 'Vit', 'Yee'),
-(15, 'Te', 90000, 'asd', 'dhasd', 'duasd'),
-(16, 'anton', 1337, 'Nylund', 'VIt', 'Human');
+(17, 'Yee', 1295, 'AntonCo', 'Vit', 'Jackor'),
+(18, 'Yoo', 295, 'AntonCo', 'Svart', 'Jackor'),
+(19, 'Hulla', 999, 'AntonCo', 'Rosa', 'Jackor'),
+(20, 'Tera', 683, 'MattiasCo', 'Gul', 'Jackor'),
+(21, 'Weho', 8672, 'MattiasCo', 'Brun', 'Jackor'),
+(22, 'Trumpa', 674, 'MattiasCo', 'Vit', 'Skjortor'),
+(23, 'rolig', 572, 'AntonCo', 'Svart', 'Skjortor'),
+(24, 'Alla', 225, 'MattiasCo', 'Svart', 'Jeans'),
+(25, 'Bla', 795, 'AntonCo', 'Brun', 'Jeans'),
+(26, 'hoj', 687, 'MattiasCo', 'Svart', 'T-shirt'),
+(27, 'gutt', 2545, 'AntonCo', 'Vit', 'T-shirt');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
