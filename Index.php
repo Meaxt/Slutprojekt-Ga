@@ -154,7 +154,7 @@ if (isset($_POST["action"])) {
         $produkter = $stmt->fetchAll();
     }
     if($_POST["action"] == "Z-A"){
-        $cat = ????
+        
         if ($cat == null) {
             $sql = "SELECT * FROM produkter WHERE 1 ORDER BY Namn DESC";
         } else {
