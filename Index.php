@@ -132,38 +132,26 @@ if (isset($_POST["action"])) {
             $_SESSION["cart"][] = array("id" => $_POST["id"], "pris" => $_POST["pris"], "namn" => $_POST["namn"], "antal" => 1);
         }
     }
-    if($_POST["action"] == "Billigast"){
+    if( isset($_POST["handling"])){
+        $category = $_POST["handling"]="category";
+        $sortby = $_POST["handling"]="sortby";
+        $sortord = $_POST["handling"]="sortord";
         
-        $sql = "SELECT * FROM produkter ORDER BY Pris";
+        
+        $sql = "SELECT * FROM produkter";
+        if($category !=""){
+            $sql .= "WHERE 'category=$category'"; 
+        }
+        if($sortby !=""){
+            $sql .= "ORDER BY $sortby, $sortord";
+        }
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
         $produkter = $stmt->fetchAll();      
     }
-    if($_POST["action"] == "Dyrast"){
-        
-        $sql = "SELECT * FROM produkter ORDER BY Pris DESC";
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute();
-        $produkter = $stmt->fetchAll();
-    }
-    if($_POST["action"] == "A-Z"){
-        
-        $sql = "SELECT * FROM produkter ORDER BY Namn";
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute();
-        $produkter = $stmt->fetchAll();
-    }
-    if($_POST["action"] == "Z-A"){
-        
-        if ($cat == null) {
-            $sql = "SELECT * FROM produkter WHERE 1 ORDER BY Namn DESC";
-        } else {
-            $sql = "SELECT * FROM produkter WHERE 1 ORDER BY Namn DESC";
-        }
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute();
-        $produkter = $stmt->fetchAll();
-    }
+
+    
+    
 }
 //hämta produkter
 
@@ -177,10 +165,30 @@ echo"<br>";
 
 
 echo "<form method='post'>";
-echo "<input type='submit' name='action' value='T-shirt'>";
-echo "<input type='submit' name='action' value='Skjortor'>";
-echo "<input type='submit' name='action' value='Jeans'>";
-echo "<input type='submit' name='action' value='Jackor'>";
+echo "<input type=radio name=category value=T-shirt>T-shirt";
+echo "<br>";
+echo "<input type=radio name=category value=Skjorta>Skjorta";
+echo "<br>";
+echo "<input type=radio name=category value=Jacka>Jacka";
+echo "<br>";
+echo "<input type=radio name=category value=Jeans>Jeans";
+echo "<br>";
+echo "<input type=radio name=category value=>Ingen";
+echo "<br>";
+echo "<br>";
+echo "<input type=radio name=sortby value=Pris>Pris";
+echo "<br>";
+echo "<input type=radio name=sortby value=A-Z>A-Z";
+echo "<br>";
+echo "<input type=radio name=sortby value=>Ingen";
+echo "<br>";
+echo "<br>";
+echo "<input type=radio name=sortord value=Stigande>Stigande";
+echo "<br>";
+echo "<input type=radio name=sortord value=Fallande>Fallande";
+echo "<br>";
+echo "<input type=submit name=handling value=sortera>";
+echo "<br>";
 echo "</form>";
 
 
