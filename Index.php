@@ -57,7 +57,7 @@ $adminprodukter = $stmt->fetchAll();
 include 'reg.html.php';
 
 if (isset($_POST["action"])) {
-      //Registrering
+    //Registrering
     if ($_POST["action"] == "reg") {
 
         $regusername = $_POST["reguser"];
@@ -98,7 +98,7 @@ if (isset($_POST["action"])) {
     }
 
 
-    
+
     if ($_POST["action"] == "New") {
         //Lägga in nya produkter
         echo "Gör new";
@@ -108,7 +108,7 @@ if (isset($_POST["action"])) {
         $category = filter_input(INPUT_POST, 'category', FILTER_SANITIZE_SPECIAL_CHARS);
         $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_SPECIAL_CHARS);
         //skapa ny
-        
+
         $sql = "INSERT INTO produkter(namn, pris, brand, category, color) VALUES ('$namn', '$pris','$brand','$category','$color')";
 //        echo $sql;
         $stmt = $dbh->prepare($sql);
@@ -125,13 +125,14 @@ if (isset($_POST["action"])) {
             if ($_SESSION["cart"][$i]["id"] == $_POST["id"]) {
                 //öka antal
                 $_SESSION["cart"][$i]["antal"] ++;
-                $add_to_cart=false;
+                $add_to_cart = false;
             }
         }
         if ($add_to_cart) {
             $_SESSION["cart"][] = array("id" => $_POST["id"], "pris" => $_POST["pris"], "namn" => $_POST["namn"], "antal" => 1);
         }
     }
+<<<<<<< HEAD
 
 
     
@@ -159,7 +160,41 @@ if (isset($_POST["action"])) {
     }
 //hämta produkter
 
+=======
+}
 
+if (isset($_POST["handling"])) {
+
+    $category = $_POST["category"];
+    $sortby = $_POST["sortby"];
+    $sortord = $_POST["sortord"];
+
+
+
+    echo $category . "<br>";
+    echo $sortby . "<br>";
+    echo $sortord . "<br>";
+
+    $sql = "SELECT * FROM produkter ";
+
+    if ($category != "") {
+        $sql .= "WHERE 'category=$category' ";
+    }
+    if ($sortby != "") {
+        $sql .= "ORDER BY $sortby, $sortord ";
+    }
+
+    echo $sql . "<br>";
+    
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $produkter = $stmt->fetchAll();
+    
+     var_dump($produkter);
+}
+>>>>>>> origin/master
+
+//hämta produkter
 //var_dump($_SESSION);
 echo "";
 echo"<br>";
@@ -182,14 +217,20 @@ echo "<br>";
 echo "<br>";
 echo "<input type=radio name=sortby value=Pris>Pris";
 echo "<br>";
-echo "<input type=radio name=sortby value=A-Z>A-Z";
+echo "<input type=radio name=sortby value=Namn>Namn";
 echo "<br>";
 echo "<input type=radio name=sortby value=>Ingen";
 echo "<br>";
 echo "<br>";
+<<<<<<< HEAD
 echo "<input type=radio name=sortord value=DESC>Stigande";
 echo "<br>";
 echo "<input type=radio name=sortord value=ASC>Fallande";
+=======
+echo "<input type=radio name=sortord value=>Stigande";
+echo "<br>";
+echo "<input type=radio name=sortord value=DESC>Fallande";
+>>>>>>> origin/master
 echo "<br>";
 echo "<input type=submit name=handling value=sortera>";
 echo "<br>";
