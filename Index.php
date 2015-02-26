@@ -132,27 +132,31 @@ if (isset($_POST["action"])) {
             $_SESSION["cart"][] = array("id" => $_POST["id"], "pris" => $_POST["pris"], "namn" => $_POST["namn"], "antal" => 1);
         }
     }
-    if( isset($_POST["handling"])){
-        $category = $_POST["handling"]="category";
-        $sortby = $_POST["handling"]="sortby";
-        $sortord = $_POST["handling"]="sortord";
-        
-        
-        $sql = "SELECT * FROM produkter";
-        if($category !=""){
-            $sql .= "WHERE 'category=$category'"; 
-        }
-        if($sortby !=""){
-            $sql .= "ORDER BY $sortby, $sortord";
-        }
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute();
-        $produkter = $stmt->fetchAll();      
-    }
+
 
     
     
 }
+    if( isset($_POST["handling"])){
+        $category = $_POST["category"];
+        $sortby = $_POST["sortby"];
+        $sortord = $_POST["sortord"];
+        
+        
+        $sql = "SELECT * FROM produkter ";
+        if($category !=""){
+            $sql .= "WHERE category='$category' "; 
+        }
+        if($sortby !=""){
+            $sql .= "ORDER BY $sortby $sortord";
+        }
+        echo $sql;
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        $produkter = $stmt->fetchAll();
+        echo '<br>';
+        var_dump($produkter);
+    }
 //hämta produkter
 
 
@@ -167,7 +171,7 @@ echo"<br>";
 echo "<form method='post'>";
 echo "<input type=radio name=category value=T-shirt>T-shirt";
 echo "<br>";
-echo "<input type=radio name=category value=Skjorta>Skjorta";
+echo "<input type=radio name=category value=Skjortor>Skjortor";
 echo "<br>";
 echo "<input type=radio name=category value=Jacka>Jacka";
 echo "<br>";
@@ -183,9 +187,9 @@ echo "<br>";
 echo "<input type=radio name=sortby value=>Ingen";
 echo "<br>";
 echo "<br>";
-echo "<input type=radio name=sortord value=Stigande>Stigande";
+echo "<input type=radio name=sortord value=DESC>Stigande";
 echo "<br>";
-echo "<input type=radio name=sortord value=Fallande>Fallande";
+echo "<input type=radio name=sortord value=ASC>Fallande";
 echo "<br>";
 echo "<input type=submit name=handling value=sortera>";
 echo "<br>";
