@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 define("DB_SERVER", "localhost");
@@ -132,36 +133,29 @@ if (isset($_POST["action"])) {
             $_SESSION["cart"][] = array("id" => $_POST["id"], "pris" => $_POST["pris"], "namn" => $_POST["namn"], "antal" => 1);
         }
     }
-<<<<<<< HEAD
 
 
-    
-    
-}
-    if( isset($_POST["handling"])){
-        $category = $_POST["category"];
-        $sortby = $_POST["sortby"];
-        $sortord = $_POST["sortord"];
+    if ($_POST["action"] == "search") {
         
+        $sˆkord = $_POST["search"];
         
-        $sql = "SELECT * FROM produkter ";
-        if($category !=""){
-            $sql .= "WHERE category='$category' "; 
-        }
-        if($sortby !=""){
-            $sql .= "ORDER BY $sortby $sortord";
-        }
-        echo $sql;
+        $sql = "SELECT * FROM produkter WHERE Namn LIKE '%$sˆkord%' ";
+        
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
         $produkter = $stmt->fetchAll();
-        echo '<br>';
+        
         var_dump($produkter);
+        
+//        if($produkter = ""){
+//            echo "ojojojoj";
+//        }
     }
+}
+
 //h√§mta produkter
 
-=======
-}
+
 
 if (isset($_POST["handling"])) {
 
@@ -169,30 +163,21 @@ if (isset($_POST["handling"])) {
     $sortby = $_POST["sortby"];
     $sortord = $_POST["sortord"];
 
-
-
-    echo $category . "<br>";
-    echo $sortby . "<br>";
-    echo $sortord . "<br>";
-
     $sql = "SELECT * FROM produkter ";
 
     if ($category != "") {
-        $sql .= "WHERE 'category=$category' ";
+        $sql .= "WHERE category='$category' ";
     }
     if ($sortby != "") {
-        $sql .= "ORDER BY $sortby, $sortord ";
+        $sql .= "ORDER BY $sortby $sortord ";
     }
 
     echo $sql . "<br>";
-    
+
     $stmt = $dbh->prepare($sql);
     $stmt->execute();
     $produkter = $stmt->fetchAll();
-    
-     var_dump($produkter);
 }
->>>>>>> origin/master
 
 //h√§mta produkter
 //var_dump($_SESSION);
@@ -204,11 +189,11 @@ echo"<br>";
 
 
 echo "<form method='post'>";
-echo "<input type=radio name=category value=T-shirt>T-shirt";
+echo "<input type=radio name=category value=T-shirt>T-shirts";
 echo "<br>";
 echo "<input type=radio name=category value=Skjortor>Skjortor";
 echo "<br>";
-echo "<input type=radio name=category value=Jacka>Jacka";
+echo "<input type=radio name=category value=Jackor>Jackor";
 echo "<br>";
 echo "<input type=radio name=category value=Jeans>Jeans";
 echo "<br>";
@@ -222,24 +207,34 @@ echo "<br>";
 echo "<input type=radio name=sortby value=>Ingen";
 echo "<br>";
 echo "<br>";
-<<<<<<< HEAD
-echo "<input type=radio name=sortord value=DESC>Stigande";
-echo "<br>";
-echo "<input type=radio name=sortord value=ASC>Fallande";
-=======
-echo "<input type=radio name=sortord value=>Stigande";
+echo "<input type=radio name=sortord value=ASC>Stigande";
 echo "<br>";
 echo "<input type=radio name=sortord value=DESC>Fallande";
->>>>>>> origin/master
+echo "<br>";
 echo "<br>";
 echo "<input type=submit name=handling value=sortera>";
 echo "<br>";
 echo "</form>";
 
+echo "<br>";
+echo "<br>";
+
+
+echo "<form method='post'>";
+echo "<input type=text name=search>";
+echo " <input type=submit name=action value=search>";
+echo "</form>";
+
+echo "<br>";
+echo "<br>";
 
 //var_dump($_SESSION);
 
 echo "Produkter";
+echo "<br>";
+
+
+if ($produkter[1] !=0){
 foreach ($produkter as $produkt) {
 
     echo "<tr>";
@@ -252,21 +247,10 @@ foreach ($produkter as $produkt) {
     echo "</form>";
     echo "</tr>";
 }
-echo "Sortering";
-echo "<form method='post'>";
-echo "<input type='submit' name='action' value='Billigast'>";
-echo "<input type='submit' name='action' value='Dyrast'>";
-echo "<input type='submit' name='action' value='A-Z'>";
-echo "<input type='submit' name='action' value='Z-A'>";
-echo "</form>";
-echo "<br>";
-echo "<br>";
-echo "<br>";
-echo "<br>";
-echo "<br>";
-echo "<br>";
-echo "<br>";
-echo "<br>";
+}else{
+    echo "<br>";
+ echo "Det du letade efter existerar inte. Idiot.";   
+}
 echo "<br>";
 echo "<br>";
 echo "<br>";
@@ -311,11 +295,6 @@ echo "</form>";
 
 
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
