@@ -136,58 +136,51 @@ if (isset($_POST["action"])) {
 
 
     if ($_POST["action"] == "search") {
-        
+
         $sökord = $_POST["search"];
-        
+
         $sql = "SELECT * FROM produkter WHERE Namn LIKE '%$s�kord%' ";
-        
+
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
         $produkter = $stmt->fetchAll();
-        
+
         var_dump($produkter);
-        
+
 //        if($produkter = ""){
 //            echo "ojojojoj";
 //        }
-    
-    
-    
-}
+    }
 
 //hämta produkter
-
-    
-    
-    
 } // isset action
-if(isset($_GET["action"])){
-if(($_GET["action"] == "välj")){
+if (isset($_GET["action"])) {
+    if (($_GET["action"] == "välj")) {
 //    echo 'hej';
-    $gender = $_GET["gender"];
-    $category = $_GET["category"];
-    $sql = "SELECT * FROM produkter WHERE plagg='$category' AND gender='$gender'";
-    
-//    echo $sql;
-    
-    $stmt = $dbh->prepare($sql);
-    $stmt->execute();
-    $produkter = $stmt->fetchAll();
-//    var_dump($produkter);
-    
-    foreach ($produkter as $produkt) {
+        $gender = $_GET["gender"];
+        $category = $_GET["category"];
+        $sql = "SELECT * FROM produkter WHERE plagg='$category' AND gender='$gender'";
 
-    echo "<tr>";
-    echo "<form method='post'>";
-    echo "<td>" . $produkt[1] . " " . $produkt[2] . " Kr</td>";
-    echo "<td><input type='submit' name='action' value='add'></td>";
-    echo "<input type='hidden' value='" . $produkt[1] . "' name='namn'>";
-    echo "<input type='hidden' value='" . $produkt[2] . "' name='pris'>";
-    echo "<input type='hidden' value='" . $produkt[0] . "' name='id'>";
-    echo "</form>";
-    echo "</tr>";
-}
-}
+//    echo $sql;
+
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute();
+        $produkter = $stmt->fetchAll();
+//    var_dump($produkter);
+
+        foreach ($produkter as $produkt) {
+
+            echo "<tr>";
+            echo "<form method='post'>";
+            echo "<td>" . $produkt[1] . " " . $produkt[2] . " Kr</td>";
+            echo "<td><input type='submit' name='action' value='add'></td>";
+            echo "<input type='hidden' value='" . $produkt[1] . "' name='namn'>";
+            echo "<input type='hidden' value='" . $produkt[2] . "' name='pris'>";
+            echo "<input type='hidden' value='" . $produkt[0] . "' name='id'>";
+            echo "</form>";
+            echo "</tr>";
+        }
+    }
 }
 
 if (isset($_POST["handling"])) {
@@ -195,12 +188,20 @@ if (isset($_POST["handling"])) {
     $category = $_POST["category"];
     $sortby = $_POST["sortby"];
     $sortord = $_POST["sortord"];
+    $gender = $_GET["gender"];
+    $category = $_GET["category"];
 
     $sql = "SELECT * FROM produkter ";
 
     if ($category != "") {
         $sql .= "WHERE category='$category' ";
     }
+    if (isset($_GET["action"])) {
+        if (($_GET["action"] == "välj")) {
+            $sql .= "WHERE plagg='$category' AND gender='$gender'";
+        }
+    }
+
     if ($sortby != "") {
         $sql .= "ORDER BY $sortby $sortord ";
     }
@@ -275,22 +276,22 @@ echo "Produkter";
 echo "<br>";
 
 
-if ($produkter[1] !=0){
-foreach ($produkter as $produkt) {
+if ($produkter[1] != 0) {
+    foreach ($produkter as $produkt) {
 
-    echo "<tr>";
-    echo "<form method='post'>";
-    echo "<td>" . $produkt[1] . " " . $produkt[2] . " Kr</td>";
-    echo "<td><input type='submit' name='action' value='add'></td>";
-    echo "<input type='hidden' value='" . $produkt[1] . "' name='namn'>";
-    echo "<input type='hidden' value='" . $produkt[2] . "' name='pris'>";
-    echo "<input type='hidden' value='" . $produkt[0] . "' name='id'>";
-    echo "</form>";
-    echo "</tr>";
-}
-}else{
+        echo "<tr>";
+        echo "<form method='post'>";
+        echo "<td>" . $produkt[1] . " " . $produkt[2] . " Kr</td>";
+        echo "<td><input type='submit' name='action' value='add'></td>";
+        echo "<input type='hidden' value='" . $produkt[1] . "' name='namn'>";
+        echo "<input type='hidden' value='" . $produkt[2] . "' name='pris'>";
+        echo "<input type='hidden' value='" . $produkt[0] . "' name='id'>";
+        echo "</form>";
+        echo "</tr>";
+    }
+} else {
     echo "<br>";
- echo "Det du letade efter existerar inte. Idiot.";   
+    echo "Det du letade efter existerar inte. Idiot.";
 }
 echo "<br>";
 echo "<br>";
