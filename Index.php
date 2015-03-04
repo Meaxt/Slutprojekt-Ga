@@ -168,18 +168,18 @@ if (isset($_GET["action"])) {
         $produkter = $stmt->fetchAll();
 //    var_dump($produkter);
 
-        foreach ($produkter as $produkt) {
-
-            echo "<tr>";
-            echo "<form method='post'>";
-            echo "<td>" . $produkt[1] . " " . $produkt[2] . " Kr</td>";
-            echo "<td><input type='submit' name='action' value='add'></td>";
-            echo "<input type='hidden' value='" . $produkt[1] . "' name='namn'>";
-            echo "<input type='hidden' value='" . $produkt[2] . "' name='pris'>";
-            echo "<input type='hidden' value='" . $produkt[0] . "' name='id'>";
-            echo "</form>";
-            echo "</tr>";
-        }
+//        foreach ($produkter as $produkt) {
+//
+//            echo "<tr>";
+//            echo "<form method='post'>";
+//            echo "<td>" . $produkt[1] . " " . $produkt[2] . " Kr</td>";
+//            echo "<td><input type='submit' name='action' value='add'></td>";
+//            echo "<input type='hidden' value='" . $produkt[1] . "' name='namn'>";
+//            echo "<input type='hidden' value='" . $produkt[2] . "' name='pris'>";
+//            echo "<input type='hidden' value='" . $produkt[0] . "' name='id'>";
+//            echo "</form>";
+//            echo "</tr>";
+//        }
     }
 }
 
@@ -257,6 +257,33 @@ echo "<br>";
 echo "<input type=submit name=handling value=sortera>";
 echo "<br>";
 echo "</form>";
+
+
+echo "<br>";
+echo "<br>";
+echo "<br>";
+//var_dump($_SESSION["cart"]);
+echo 'KUNDVAGN';
+
+$total = 0;
+
+foreach ($_SESSION["cart"] as $kund => $cart){
+    echo "<tr>";
+        echo "<form method='post'>";
+
+        echo "<td>" . $cart["namn"] . " " . $cart["antal"] . " st " . $cart["pris"] . " kr </td>";
+        echo "<td><input type='submit' name='action' value='remove'></td>";
+//        echo "<input type='hidden' value='" . $cart[1] . "' name='namn'>";
+//        echo "<input type='hidden' value='" . $cart[2] . "' name='pris'>";
+//        echo "<input type='hidden' value='" . $cart[0] . "' name='id'>";
+        
+        $total += $cart["pris"]*$cart["antal"];
+        
+        echo "</form>";
+        echo "</tr>";
+}
+
+echo "<br>"."Totalt pris: ".$total . "kr";
 
 echo "<br>";
 echo "<br>";
