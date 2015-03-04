@@ -137,9 +137,9 @@ if (isset($_POST["action"])) {
 
     if ($_POST["action"] == "search") {
         
-        $s�kord = $_POST["search"];
+        $sökord = $_POST["search"];
         
-        $sql = "SELECT * FROM produkter WHERE Namn LIKE '%$s�kord%' ";
+        $sql = "SELECT * FROM produkter WHERE Namn LIKE '%$s�kord%' ";
         
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
@@ -150,12 +150,45 @@ if (isset($_POST["action"])) {
 //        if($produkter = ""){
 //            echo "ojojojoj";
 //        }
-    }
+    
+    
+    
 }
 
 //hämta produkter
 
+    
+    
+    
+} // isset action
+if(isset($_GET["action"])){
+if(($_GET["action"] == "välj")){
+//    echo 'hej';
+    $gender = $_GET["gender"];
+    $category = $_GET["category"];
+    $sql = "SELECT * FROM produkter WHERE plagg='$category' AND gender='$gender'";
+    
+//    echo $sql;
+    
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $produkter = $stmt->fetchAll();
+//    var_dump($produkter);
+    
+    foreach ($produkter as $produkt) {
 
+    echo "<tr>";
+    echo "<form method='post'>";
+    echo "<td>" . $produkt[1] . " " . $produkt[2] . " Kr</td>";
+    echo "<td><input type='submit' name='action' value='add'></td>";
+    echo "<input type='hidden' value='" . $produkt[1] . "' name='namn'>";
+    echo "<input type='hidden' value='" . $produkt[2] . "' name='pris'>";
+    echo "<input type='hidden' value='" . $produkt[0] . "' name='id'>";
+    echo "</form>";
+    echo "</tr>";
+}
+}
+}
 
 if (isset($_POST["handling"])) {
 
@@ -179,15 +212,23 @@ if (isset($_POST["handling"])) {
     $produkter = $stmt->fetchAll();
 }
 
+
 //hämta produkter
 //var_dump($_SESSION);
 echo "";
 echo"<br>";
 echo"<br>";
 echo"<br>";
+echo "<form method='get'>";
+echo"<input type=text name=gender>";
+echo"<input type=text name=category>";
+echo "<input type=submit name=action value=välj>";
+echo "</form>";
 
 
-
+echo"<br>";
+echo"<br>";
+echo"<br>";
 echo "<form method='post'>";
 echo "<input type=radio name=category value=T-shirt>T-shirts";
 echo "<br>";
