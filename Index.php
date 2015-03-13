@@ -214,6 +214,30 @@ if (isset($_POST["handling"])) {
 }
 
 
+
+
+
+
+
+$filt = "burton, appertiff";
+$arr = serialize($filt);
+echo $arr;
+
+echo "<form method='post'>";
+echo "<input type=submit name=hej value=sup>";
+$sql = "SELECT * FROM produkter ";
+if($_POST["hej"]){
+
+foreach ($arr as $rus){
+    for($i = 0; $i<arr.Length; $i++){
+    $sql .= "WHERE marke = ".$rus[0]."";
+    
+    echo $sql;  
+}
+}
+}
+
+
 //hämta produkter
 //var_dump($_SESSION);
 echo "";

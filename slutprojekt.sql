@@ -1,11 +1,11 @@
--- phpMyAdmin SQL Dump
--- version 4.0.9
+﻿-- phpMyAdmin SQL Dump
+-- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
 -- Värd: 127.0.0.1
--- Skapad: 14 jan 2015 kl 09:27
--- Serverversion: 5.6.14
--- PHP-version: 5.5.6
+-- Tid vid skapande: 11 mars 2015 kl 14:03
+-- Serverversion: 5.6.20
+-- PHP-version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,28 +27,37 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `inlogg` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+  `email` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `namn` varchar(30) NOT NULL,
+  `efternamn` varchar(30) NOT NULL,
+  `telenummer` varchar(30) NOT NULL,
+  `adress` varchar(30) NOT NULL,
+  `ort` varchar(30) NOT NULL,
+  `postnummer` varchar(30) NOT NULL,
+  `land` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumpning av Data i tabell `inlogg`
 --
 
-INSERT INTO `inlogg` (`id`, `username`, `password`) VALUES
-(1, 'meaxt', 'meaxt'),
-(2, 'antomen', 'antomen'),
-(4, '123', '123'),
-(5, '123', '123'),
-(6, 'hej', 'hej'),
-(7, '', ''),
-(8, '', ''),
-(9, '', ''),
-(10, '', ''),
-(11, '', ''),
-(12, '', '');
+INSERT INTO `inlogg` (`email`, `password`, `namn`, `efternamn`, `telenummer`, `adress`, `ort`, `postnummer`, `land`) VALUES
+('', '', '', '', '', '', '', '', ''),
+('albin@albin.se', 'qwe', '', '', '', '', '', '', ''),
+('anton@anton.se', 'anton', '', '', '', '', '', '', ''),
+('calle@calle.calle', 'calle', '', '', '', '', '', '', ''),
+('carl@carl.carl', 'carl', '', '', '', '', '', '', ''),
+('gah@gah.se', 'gah', '', '', '', '', '', '', ''),
+('go@away.se', 'go@home.se', '', '', '', '', '', '', ''),
+('go@home.se', 'go@home', '', '', '', '', '', '', ''),
+('hej@hej.se', 'hej', '', '', '', '', '', '', ''),
+('ja@ja.se', 'ja', '', '', '', '', '', '', ''),
+('jup@jupp', 'jup', '', '', '', '', '', '', ''),
+('kul@kul.kul', 'kul', '', '', '', '', '', '', ''),
+('po@po.se', 'po', '', '', '', '', '', '', ''),
+('qw@qw.qw', 'qw', '', '', '', '', '', '', ''),
+('up@up', 'up', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -57,32 +66,64 @@ INSERT INTO `inlogg` (`id`, `username`, `password`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `produkter` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Namn` varchar(20) NOT NULL,
-  `Pris` int(11) NOT NULL,
-  `brand` varchar(30) NOT NULL,
-  `color` varchar(30) NOT NULL,
-  `category` varchar(30) NOT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+`id` int(11) NOT NULL,
+  `pris` int(10) NOT NULL,
+  `namn` varchar(15) NOT NULL,
+  `märke` varchar(15) NOT NULL,
+  `plagg` varchar(15) NOT NULL,
+  `gender` varchar(15) NOT NULL,
+  `bild` varchar(100) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
 
 --
 -- Dumpning av Data i tabell `produkter`
 --
 
-INSERT INTO `produkter` (`Id`, `Namn`, `Pris`, `brand`, `color`, `category`) VALUES
-(17, 'Yee', 1295, 'AntonCo', 'Vit', 'Jackor'),
-(18, 'Yoo', 295, 'AntonCo', 'Svart', 'Jackor'),
-(19, 'Hulla', 999, 'AntonCo', 'Rosa', 'Jackor'),
-(20, 'Tera', 683, 'MattiasCo', 'Gul', 'Jackor'),
-(21, 'Weho', 8672, 'MattiasCo', 'Brun', 'Jackor'),
-(22, 'Trumpa', 674, 'MattiasCo', 'Vit', 'Skjortor'),
-(23, 'rolig', 572, 'AntonCo', 'Svart', 'Skjortor'),
-(24, 'Alla', 225, 'MattiasCo', 'Svart', 'Jeans'),
-(25, 'Bla', 795, 'AntonCo', 'Brun', 'Jeans'),
-(26, 'hoj', 687, 'MattiasCo', 'Svart', 'T-shirt'),
-(27, 'gutt', 2545, 'AntonCo', 'Vit', 'T-shirt');
+INSERT INTO `produkter` (`id`, `pris`, `namn`, `märke`, `plagg`, `gender`, `bild`) VALUES
+(1, 346, 'fin tshirt', 'diesel', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(2, 7437, 'dyr tshirt', 'yoloswag', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(3, 19219, 'fina jeans', 'Levi''s', 'JEANS', 'TJEJ', 'http://i.imgur.com/fu4PrlO.jpg'),
+(4, 199, 'hej', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(6, 199, 'hasd', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(7, 199, 'htjrtfj', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(8, 199, '694679', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(9, 199, 'rjh4', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(10, 199, '3487e', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(11, 199, 'heah', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(12, 199, 'hfrjs', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(13, 199, 'dfnhw', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(14, 199, 'djmed', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(15, 199, 'rftyjsa', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(16, 199, 'dzn', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(17, 199, 'vanhae', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(18, 199, 'anae5rn', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg'),
+(19, 199, 'fgjmsx', 'skank', 'TSHIRT', 'KILLE', 'http://i.imgur.com/fu4PrlO.jpg');
 
+--
+-- Index för dumpade tabeller
+--
+
+--
+-- Index för tabell `inlogg`
+--
+ALTER TABLE `inlogg`
+ ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Index för tabell `produkter`
+--
+ALTER TABLE `produkter`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `namn` (`namn`);
+
+--
+-- AUTO_INCREMENT för dumpade tabeller
+--
+
+--
+-- AUTO_INCREMENT för tabell `produkter`
+--
+ALTER TABLE `produkter`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
