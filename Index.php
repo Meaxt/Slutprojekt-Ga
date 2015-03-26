@@ -208,9 +208,7 @@ if (isset($_POST["handling"])) {
 
     echo $sql . "<br>";
 
-    $stmt = $dbh->prepare($sql);
-    $stmt->execute();
-    $produkter = $stmt->fetchAll();
+    
 }
 
 
@@ -219,22 +217,38 @@ if (isset($_POST["handling"])) {
 
 
 
-$filt = "burton, appertiff";
-$arr = serialize($filt);
-echo $arr;
+$filt = "diesel,yoloswag,skank";
+
+
 
 echo "<form method='post'>";
 echo "<input type=submit name=hej value=sup>";
-$sql = "SELECT * FROM produkter ";
-if($_POST["hej"]){
 
-foreach ($arr as $rus){
-    for($i = 0; $i<arr.Length; $i++){
-    $sql .= "WHERE marke = ".$rus[0]."";
+
+if($_POST["hej"]){
+    $sql = "SELECT * FROM produkter ";
+    $arr = explode(",",$filt);
+    $sql .= "WHERE märke ='".$arr[0]."'";
+    if(count($arr)> 1){
+        for($i = 1; $i < count($arr); $i++){
+            $sql .=" OR märke='".$arr[$i]."'";
+        }
+    }
+    echo $sql;
+//    var_dump($arr);
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute();
+    $produkter = $stmt->fetchAll();
+    var_dump($produkter);
+
+//foreach ($arr as $rus){
     
-    echo $sql;  
-}
-}
+//    
+//    $sql .= "WHERE marke = ".$rus[0]."";
+//    
+//    echo $sql;  
+//
+//}
 }
 
 
@@ -327,7 +341,7 @@ echo "Produkter";
 echo "<br>";
 
 
-if ($produkter[1] != 0) {
+//if ($produkter[1] != 0) {
     foreach ($produkter as $produkt) {
 
         echo "<tr>";
@@ -340,10 +354,10 @@ if ($produkter[1] != 0) {
         echo "</form>";
         echo "</tr>";
     }
-} else {
-    echo "<br>";
-    echo "Det du letade efter existerar inte. Idiot.";
-}
+//} else {
+//    echo "<br>";
+//    echo "Det du letade efter existerar inte. Idiot.";
+//}
 echo "<br>";
 echo "<br>";
 echo "<br>";
