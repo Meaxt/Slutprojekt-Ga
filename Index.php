@@ -122,7 +122,7 @@ if (isset($_POST["action"])) {
 
     if ($_POST["action"] == "add") {
         $add_to_cart = true;
-        for ($i = 0; $i < count($_SESSION["cart"]); $i++) {
+        for  ($i = 0; $i < count($_SESSION["cart"]); $i++) {
             if ($_SESSION["cart"][$i]["id"] == $_POST["id"]) {
                 //öka antal
                 $_SESSION["cart"][$i]["antal"] ++;
@@ -210,6 +210,10 @@ if (isset($_POST["handling"])) {
 
     
 }
+echo "<form method='post'>";
+echo "<input type=submit name=byte value=1>";
+echo "<input type=submit name=byte value=2>";
+echo "</form>";
 
 
 
@@ -218,6 +222,14 @@ if (isset($_POST["handling"])) {
 
 
 $filt = "diesel,yoloswag,skank";
+$page = "1";
+if($page = 1){
+    $limit = "10";
+    $offset = "1";
+}else{
+    $limit = "10";
+    $offset = "10";
+}
 
 
 
@@ -234,6 +246,7 @@ if($_POST["hej"]){
             $sql .=" OR märke='".$arr[$i]."'";
         }
     }
+    $sql .= " LIMIT ".$limit." OFFSET ".$offset."";
     echo $sql;
 //    var_dump($arr);
     $stmt = $dbh->prepare($sql);
